@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment'
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 /** Accessible back-end endpoints */
 @Injectable({

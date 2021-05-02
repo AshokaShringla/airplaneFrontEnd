@@ -24,12 +24,7 @@ export class LoginComponent implements OnInit {
     private _contextService:ContextService
   ) { }
 
-  ngOnInit() {
-    console.log("login Init role: "+this._contextService.retrieveTokenRole()); 
-    if (this._contextService.retrieveTokenRole() != null) {
-      this.router.navigateByUrl('reports');
-    }
-  }
+  ngOnInit() {}
 
   loginSubmit() {
     console.log("Email: "+this.customerToLog.customerEmail);
