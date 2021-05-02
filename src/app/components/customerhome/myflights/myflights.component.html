@@ -1,0 +1,36 @@
+<p>
+</p>
+
+<h6> Logged in as {{customer.customerEmail}}</h6>
+
+<h2>My Flights</h2>
+
+<table class="table table-striped table-bordered">
+  <tr style="background: rgb(129, 52, 52)">
+    <th>AIRLINE</th>
+    <th>FLIGHT NUMBER</th>
+    <th>DEPARTURE AIRPORT</th>
+    <th>DEPARTURE DATE TIME</th>
+    <th>ARRIVAL AIRPORT</th>
+    <th>ARRIVAL DATE TIME</th>
+    <th>BASE PRICE</th>
+    <th>STATUS</th>
+    <th>AIRPLANE NUMBER</th>
+  </tr>
+  <tr *ngFor = "let flight of flights">
+      <td>{{flight.airline}}</td>
+      <td>{{flight.id}}</td>
+      <td>{{flight.dAirport}}</td>
+      <td>{{flight.dTime}}</td>
+      <td>{{flight.aAirport}}</td>
+      <td>{{flight.aTime}}</td>
+      <td>{{flight.bPrice}}</td>
+      <td>{{flight.status}}</td>
+      <td>{{flight.aId}}</td>
+      <td>
+  </tr>
+ 
+  <tr *ngIf = "flights && flights.length == 0">
+    <td colspan="3">no records found</td>
+  </tr>
+</table>
