@@ -17,10 +17,7 @@ export class AuthenticationService {
     loginAuthentication(customer:Customer): Observable<any>{
       let body = JSON.parse(JSON.stringify(customer));
       console.log(body);
-      // Remember to change URL
-
       return this._httpService.post(this.endpoints.LOGIN_USER, body);
-
     }
 
     // register(customer: Customer) {

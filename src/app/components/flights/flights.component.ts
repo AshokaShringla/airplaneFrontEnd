@@ -15,24 +15,13 @@ export class FlightsComponent implements OnInit {
   flights:Flight[];
   statusMessage: string
   flight = new Flight();
-  email: String;
-  customer: Customer;
-
-  usertype: string
-  loggedIn: boolean
 
   constructor(    private router:Router,
     private _flightService:FlightService,
     private _contextService:ContextService) { }
 
   ngOnInit(): void {
-    if(localStorage.getItem("login") == "true"){
-      this.loggedIn = true
-      this.customer = this._contextService.getUser();
-      this.email = this.customer.customerEmail;
-      this.getFlights();
-      
-    }
+    this.getFlights();
 
   }
 
@@ -48,9 +37,6 @@ export class FlightsComponent implements OnInit {
   }
 
   getFlightsAirline():void{
-    console.log("airline: "+this.flight.airline);
-    console.log("d: "+this.flight.dAirport);
-    console.log("a: "+this.flight.aAirport);
   }
 
 

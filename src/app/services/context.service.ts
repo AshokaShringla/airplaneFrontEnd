@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../models/customer.model';
-import { Observable } from 'rxjs';
+import { ObjectUnsubscribedError, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { LoginComponent } from '../components/login/login.component';
+import { AuthenticationService } from './authentication.service';
 // import { setInjectImplementation } from '@angular/core/src/di/injector_compatibility';
 
 @Injectable({
@@ -9,54 +11,85 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ContextService {
 
-  constructor() { }
+  constructor(private _authenticationService: AuthenticationService) { }
 
-  private tokenKeyRole:string = "tokenKeyRole";
-  private tokenKeyId:string = "tokenKeyId";
-  // private tokenKeyFullName:string = "tokenKeyFullName";
-  // private tokenKeyEmail:string = "tokenKeyEmail";
+  private tokenRole:string = "tokenRole";
+  private tokenEmail:string = "tokenEmail";
+  private tokenPassword:string = 'tokenPassword'
+  statusMessage: string
 
     store(customer:Customer) {
-        localStorage.setItem(this.tokenKeyRole, "Customer");
-        localStorage.setItem(this.tokenKeyId, customer.customerEmail);
+        localStorage.setItem(this.tokenRole, "Customer");
+        localStorage.setItem(this.tokenEmail, customer.customerEmail);
+        localStorage.setItem(this.tokenPassword, customer.password)
+        localStorage.setItem("login","true")
         this.setUser(customer);
-        // localStorage.setItem(this.tokenKeyFullName, user.firstName+" "+user.lastName);
-        // localStorage.setItem(this.tokenKeyEmail, user.email);
-        console.log("REMEMBER TO REMOVE THE BELOW LINES IN CONTEXT.SERVICE.TS")
-        console.log("Stored Role: "+localStorage.getItem(this.tokenKeyRole)+" and ID: "+localStorage.getItem(this.tokenKeyId));
     }
 
-    retrieveTokenRole() {
-        let storedTokenRole:string = localStorage.getItem(this.tokenKeyRole);
-        return storedTokenRole;
+    getRole() {
+      return localStorage.getItem(this.tokenRole)
     }
 
-    retrieveTokenId() {
-        let storedTokenId:number = parseInt(localStorage.getItem(this.tokenKeyId));
-        return storedTokenId;
+    getEmail() {
+      return localStorage.getItem(this.tokenEmail)
+    }
+
+    getPass(){
+      return localStorage.getItem(this.tokenPassword)
     }
 
     clear() {
-        localStorage.removeItem(this.tokenKeyRole);
-        localStorage.removeItem(this.tokenKeyId);
-        // localStorage.removeItem(this.tokenKeyFullName);
-        // localStorage.removeItem(this.tokenKeyEmail);
+        localStorage.removeItem(this.tokenRole);
+        localStorage.removeItem(this.tokenEmail);
+        localStorage.removeItem(this.tokenPassword)
         localStorage.setItem("login","false")
     }
 
     private customer = new Customer;
 
+    private check = new Customer;
+
     setUser(customer: Customer) {
-        this.customer = customer;
+      this.check = customer;
+    }
+
+    checkUser(customer: Customer){
+      this._authenticationService.loginAuthentication(customer).subscribe(customerData =>{
+        this.check = <Customer>customerData;
+        console.log(this.check);
+        this.setUser(this.check)},
+        error => this.statusMessage = "Error"
+        )
+    }
+
+    getUser(){
+
+      this.customer.customerEmail = localStorage.getItem(this.tokenEmail)
+      this.customer.password = localStorage.getItem(this.tokenPassword)
+
+      console.log("hello")
+      
+
+
+      this.checkUser(this.customer)
+
+      console.log("hello")
+      console.log(this.check.customerEmail)
+      console.log(this.check.password)
+
+      if(this.check.customerEmail == this.customer.customerEmail
+          && this.check.password == this.customer.password){
+          this.check = new Customer;
+          return this.customer
+      }
+      else{
+        this.check = new Customer;
+        return null;
+      }
+
     }
 
     clearUser(){
       this.customer = new Customer;
-    }
-
-    getUser():Customer {
-      console.log(localStorage.getItem(this.tokenKeyId))
-        this.customer.customerEmail = localStorage.getItem(this.tokenKeyId);
-        return this.customer;
     }
 }

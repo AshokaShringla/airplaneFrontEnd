@@ -17,10 +17,15 @@ export class CustomerhomeComponent implements OnInit {
     private _contextService:ContextService) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem("login") == "true"){
 
-    this.customer = this._contextService.getUser();
-    console.log(this.customer.customerEmail)
+      this.customer = new Customer;
 
+      console.log("here1")
+      this.customer.customerEmail = this._contextService.getEmail();
+      this.customer.password = this._contextService.getPass();
+      console.log("here")
+    }
   }
 
 }

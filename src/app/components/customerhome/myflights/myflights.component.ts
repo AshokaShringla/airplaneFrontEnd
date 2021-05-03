@@ -27,18 +27,17 @@ export class MyflightsComponent implements OnInit {
 
   ngOnInit(): void {
     if(localStorage.getItem("login") == "true"){
-      this.loggedIn = true
-      this.customer = this._contextService.getUser();
-      this.email = this.customer.customerEmail;
-      this.getFlights();
+      this.customer = new Customer;
+      this.customer.customerEmail = this._contextService.getEmail()
+      this.getcFlights();
     }
   }
 
-  getFlights():void
+  getcFlights():void
   {
     console.log("Got a post");
-    console.log(this.email);
-    this._flightService.getcFlights(this.email)
+    console.log(this.customer.customerEmail);
+    this._flightService.getcFlights(this.customer.customerEmail)
     .subscribe((flightData) => this.flights = flightData,
                                 (error) => {console.log(error);
                                 this.statusMessage = "Problem with service"
@@ -47,9 +46,7 @@ export class MyflightsComponent implements OnInit {
   }
 
   getFlightsAirline():void{
-    console.log("airline: "+this.flight.airline);
-    console.log("d: "+this.flight.dAirport);
-    console.log("a: "+this.flight.aAirport);
+
   }
 }
 
