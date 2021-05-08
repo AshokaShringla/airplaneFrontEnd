@@ -1,6 +1,6 @@
 <p>
 </p>
-
+<body>
 <h6> Logged in as {{customer.customerEmail}}</h6>
 
 <h2>My Flights</h2>
@@ -10,9 +10,11 @@
     <th>AIRLINE</th>
     <th>FLIGHT NUMBER</th>
     <th>DEPARTURE AIRPORT</th>
-    <th>DEPARTURE DATE TIME</th>
+    <th>DEPARTURE DATE</th>
+    <th>DEPARTURE TIME</th>
     <th>ARRIVAL AIRPORT</th>
-    <th>ARRIVAL DATE TIME</th>
+    <th>ARRIVAL DATE</th>
+    <th>ARRIVAL TIME</th>
     <th>BASE PRICE</th>
     <th>STATUS</th>
     <th>AIRPLANE NUMBER</th>
@@ -21,8 +23,10 @@
       <td>{{flight.airline}}</td>
       <td>{{flight.id}}</td>
       <td>{{flight.dAirport}}</td>
+      <td>{{flight.dDate}}</td>
       <td>{{flight.dTime}}</td>
       <td>{{flight.aAirport}}</td>
+      <td>{{flight.aDate}}</td>
       <td>{{flight.aTime}}</td>
       <td>{{flight.bPrice}}</td>
       <td>{{flight.status}}</td>
@@ -34,3 +38,4 @@
     <td colspan="3">no records found</td>
   </tr>
 </table>
+</body>

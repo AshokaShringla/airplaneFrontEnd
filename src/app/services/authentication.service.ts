@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../models/customer.model';
+import { Agent } from '../models/agent.model';
+import { Staff } from '../models/staff.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EndpointsService } from '../endpoints/endpoints.service';
@@ -16,16 +18,36 @@ export class AuthenticationService {
 
     loginAuthentication(customer:Customer): Observable<any>{
       let body = JSON.parse(JSON.stringify(customer));
-      console.log(body);
       return this._httpService.post(this.endpoints.LOGIN_USER, body);
     }
 
-    // register(customer: Customer) {
-    //   console.log("Before enter register");
+    register(customer: Customer) {
 
-    //   return this._httpService.post(this.endpoints.REGISTER_CUS, customer);
+      return this._httpService.post(this.endpoints.REGISTER_USER, customer);
 
-    // } 
+    } 
+
+    loginAgent(agent:Agent): Observable<any>{
+      let body = JSON.parse(JSON.stringify(agent));
+      return this._httpService.post(this.endpoints.LOGIN_AGENT, body);
+    }
+
+    registerAgent(agent: Agent) {
+      console.log(agent);
+      return this._httpService.post(this.endpoints.REGISTER_AGENT, agent);
+
+    } 
+
+    loginStaff(staff:Staff): Observable<any>{
+      let body = JSON.parse(JSON.stringify(staff));
+      return this._httpService.post(this.endpoints.LOGIN_STAFF, body);
+    }
+
+    registerStaff(staff: Staff) {
+
+      return this._httpService.post(this.endpoints.REGISTER_STAFF, staff);
+
+    } 
   
     // setConnectedCustomer(customer) {
     //   this.connectedCustomer = customer;

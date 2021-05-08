@@ -1,63 +1,133 @@
+<body>
 <p>
   </p>
   <h2>Flight List</h2>
 
   <form class="form-horizontal">
+    <label class="control-label col-sm-2">Departure Airport</label>
     <div class="input-group form-group col-sm-8">
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-user"></i></span>
         </div>
-        <input id="airline" type="text" [(ngModel)]="flight.airline" name="airline" class="form-control"
-            placeholder="Airline">
+        <input id="dAirport" type="text" [(ngModel)]="flight.dAirport" name="dAirport" class="form-control"
+            placeholder="JFK">
 
     </div>
+    <label class="control-label col-sm-2">Arrival Airport</label>
     <div class="input-group form-group col-sm-8">
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-key"></i></span>
         </div>
-        <input id="dAirport" type="text" [(ngModel)]="flight.dAirport" name="dAirport"
-            class="form-control" placeholder="Departure Airport">
+        <input id="aAirport" type="text" [(ngModel)]="flight.aAirport" name="aAirport"
+            class="form-control" placeholder="PVG">
     </div>
+    <label class="control-label col-sm-2">Departure Date</label>
     <div class="input-group form-group col-sm-8">
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-user"></i></span>
         </div>
-        <input id="id" type="text" [(ngModel)]="flight.id" name="id" class="form-control"
-            placeholder="Flight Number">
+        <input id="date" type="date" [(ngModel)]="flight.dDate" name="dDate" class="form-control"
+            placeholder="Departure Date">
 
     </div>
     <div class="form-group col-sm-offset-2 col-sm-8">
-        <button (click)="getFlightsAirline()" class="btn login_btn btn-primary">Search</button>
+        <button (click)="getFlightsSearch()" class="btn login_btn btn-primary">Search</button>
         <!-- <input id="formButton" type="button" value="Login" class="btn float-right login_btn" onclick="loginSubmit()"> -->
     </div>
 </form>
   
-  <table class="table table-striped table-bordered">
+  <table  class="table table-striped table-bordered">
     <tr style="background: rgb(129, 52, 52)">
       <th>AIRLINE</th>
-      <th>FLIGHT NUMBER</th>
+      <!-- <th>FLIGHT NUMBER</th> -->
       <th>DEPARTURE AIRPORT</th>
-      <th>DEPARTURE DATE TIME</th>
+      <th>DEPARTURE DATE</th>
+      <th>DEPARTURE TIME</th>
       <th>ARRIVAL AIRPORT</th>
-      <th>ARRIVAL DATE TIME</th>
+      <th>ARRIVAL DATE</th>
+      <th>ARRIVAL TIME</th>
       <th>BASE PRICE</th>
-      <th>STATUS</th>
-      <th>AIRPLANE NUMBER</th>
+      <th *ngIf = "ifLoggedIn()">Purchase</th>
+      <!-- <th>STATUS</th>
+      <th>AIRPLANE NUMBER</th> -->
     </tr>
     <tr *ngFor = "let flight of flights">
         <td>{{flight.airline}}</td>
-        <td>{{flight.id}}</td>
+        <!-- <td>{{flight.id}}</td> -->
         <td>{{flight.dAirport}}</td>
+        <td>{{flight.dDate}}</td>
         <td>{{flight.dTime}}</td>
         <td>{{flight.aAirport}}</td>
+        <td>{{flight.aDate}}</td>
         <td>{{flight.aTime}}</td>
         <td>{{flight.bPrice}}</td>
-        <td>{{flight.status}}</td>
-        <td>{{flight.aId}}</td>
-        <td>
+        <td *ngIf = "ifLoggedIn()"><button (click)="buyTicket(flight)" class="btn login_btn btn-primary">Buy</button></td>
+        <!-- <td>{{flight.status}}</td>
+        <td>{{flight.aId}}</td> -->
     </tr>
    
     <tr *ngIf = "flights && flights.length == 0">
       <td colspan="3">no records found</td>
     </tr>
   </table>
+
+
+  <form class="form-horizontal">
+    <label class="control-label col-sm-2">Airline</label>
+    <div class="input-group form-group col-sm-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+        </div>
+        <input id="airline" type="text" [(ngModel)]="statusFlight.airline" name="airline" class="form-control"
+            placeholder="Emirates">
+
+    </div>
+    <label class="control-label col-sm-2">Flight Number</label>
+    <div class="input-group form-group col-sm-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-key"></i></span>
+        </div>
+        <input id="fid" type="number" [(ngModel)]="statusFlight.id" name="fid"
+            class="form-control" placeholder="100">
+    </div>
+
+    <div>
+      <label class = "control-form" for = "whichDate">Choose departure or arrival date: </label>
+      <div>
+        <select type = "text" name = "whichDate" id = "dates" [(ngModel)] = "dateType" placeholder="Date">
+          <option value = "Departure">Departure</option>
+          <option value = "Arrival">Arrival</option>
+        </select>
+      </div>
+    </div>
+
+  <div *ngIf = "ifd()">
+    <label class="control-label col-sm-2">Departure Date</label>
+    <div class="input-group form-group col-sm-8">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+        </div>
+        <input id="dDate" type="date" [(ngModel)]="statusFlight.dDate" name="dDate" class="form-control"
+            placeholder="Departure Date">
+          </div>
+        </div>
+
+    <div *ngIf = "!ifd()">
+      <label class="control-label col-sm-2">Arrival Date</label>
+      <div class="input-group form-group col-sm-8">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+          </div>
+          <input id="aDate" type="date" [(ngModel)]="statusFlight.aDate" name="aDate" class="form-control"
+              placeholder="Arrival Date">
+            </div>
+          </div>
+        <div class="form-group col-sm-offset-2 col-sm-8">
+            <button (click)="getFlightStatus()" class="btn login_btn btn-primary">Search</button>
+            <!-- <input id="formButton" type="button" value="Login" class="btn float-right login_btn" onclick="loginSubmit()"> -->
+        </div>
+    </form>
+
+<p *ngIf = "result"> {{statusFlight.airline}}'s flight {{statusFlight.id}} is {{statusFlight.status}} </p>
+
+</body>

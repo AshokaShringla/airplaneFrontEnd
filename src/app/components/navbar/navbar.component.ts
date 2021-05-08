@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContextService } from 'src/app/services/context.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -10,22 +12,14 @@ export class NavbarComponent implements OnInit {
 
   userType: string;
 
-  constructor(private _contextService:ContextService) { }
+  constructor(private _contextService:ContextService,
+    private router:Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
 
   ifLoggedIn(){
     if( localStorage.getItem("login")=="true"){
-      if(localStorage.getItem("customer") == "true"){
-        this.userType = "customer"
-      }
-      else if (localStorage.getItem("agent")=="true"){
-        this.userType = "Booking agent"
-      }
-      else if (localStorage.getItem("staff")=="true"){
-        this.userType = "Airline staff"
-      }
       return true;
     }
     else{
@@ -34,7 +28,28 @@ export class NavbarComponent implements OnInit {
   }
 
   ifCustomer(){
-    if(this.userType = "customer"){
+    if(this._contextService.getRole() == "Customer"){
+      this.userType = "Customer";
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  ifAgent(){
+    if(this._contextService.getRole() == "Agent"){
+      this.userType = "Agent";
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  ifStaff(){
+    if(this._contextService.getRole() == "Staff"){
+      this.userType = "Staff";
       return true;
     }
     else{
@@ -44,7 +59,8 @@ export class NavbarComponent implements OnInit {
 
   logout(){
     this._contextService.clear();
-    this._contextService.clearUser();
+    this.userType = undefined;
+    this.toastr.success("Logout Successful", "Notification")
   }
 
 }

@@ -22,7 +22,7 @@ export class Customer {
 
 	passportCountry: string;
 
-	dateBirth: string;
+	dateBirth: Date;
 
     constructor(){}
 

@@ -1,0 +1,31 @@
+<p>createairport works!</p>
+<body>
+
+    <label class="control-label col-sm-2">Add Airport</label>
+    <form class="form-horizontal">
+
+      <label class="control-label col-sm-2">Name</label>
+      <div class="input-group form-group col-sm-8">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+          </div>
+          <input id="name" type="text" [(ngModel)]="airport.name" name="name" class="form-control"
+              placeholder="name">
+      </div>
+
+      <label class="control-label col-sm-2">City</label>
+      <div class="input-group form-group col-sm-8">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+          </div>
+          <input id="city" type="text" [(ngModel)]="airport.city" name="city" class="form-control"
+              placeholder="city">
+      </div>
+
+      <div class="form-group col-sm-offset-2 col-sm-8">
+          <button (click)="createAirport()" class="btn login_btn btn-primary">Create</button>
+          <!-- <input id="formButton" type="button" value="Login" class="btn float-right login_btn" onclick="loginSubmit()"> -->
+      </div>
+  </form>
+
+</body>

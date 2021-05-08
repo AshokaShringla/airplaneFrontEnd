@@ -1,0 +1,148 @@
+<body>
+
+    <table  class="table table-striped table-bordered">
+        <tr style="background: rgb(129, 52, 52)">
+          <th>AIRLINE</th>
+          <!-- <th>FLIGHT NUMBER</th> -->
+          <th>DEPARTURE AIRPORT</th>
+          <th>DEPARTURE DATE</th>
+          <th>DEPARTURE TIME</th>
+          <th>ARRIVAL AIRPORT</th>
+          <th>ARRIVAL DATE</th>
+          <th>ARRIVAL TIME</th>
+          <th>BASE PRICE</th>    
+          <th>STATUS</th>
+          <th>AIRPLANE NUMBER</th>
+          <th>View Passengers</th>
+          <th>Update Status</th>
+
+        </tr>
+        <tr *ngFor = "let flight of flights">
+            <td>{{flight.airline}}</td>
+            <!-- <td>{{flight.id}}</td> -->
+            <td>{{flight.dAirport}}</td>
+            <td>{{flight.dDate}}</td>
+            <td>{{flight.dTime}}</td>
+            <td>{{flight.aAirport}}</td>
+            <td>{{flight.aDate}}</td>
+            <td>{{flight.aTime}}</td>
+            <td>{{flight.bPrice}}</td>
+            <td>{{flight.status}}</td>
+            <td>{{flight.aId}}</td>
+            <td><button (click)="seePassengers(flight.id)" class="btn login_btn btn-primary">All Passengers</button></td>
+            <td>              <select (change)="updateStatus(flight.id, flight.status)" type = "text" name = "status" id = "status" [(ngModel)] = "flight.status" placeholder="status">
+                <option value = "on-time">on-time</option>
+                <option value = "delayed">delayed</option>
+              </select></td>
+
+        </tr>
+       
+        <tr *ngIf = "flights && flights.length == 0">
+          <td colspan="3">no records found</td>
+        </tr>
+      </table>
+
+      <table *ngIf = "view" class="table table-striped table-bordered">
+        <tr style="background: rgb(129, 52, 52)">
+          <th>Email</th>
+        </tr>
+        <tr *ngFor = "let passenger of passengers">
+            <td>{{passenger}}</td>
+        </tr>
+       
+        <tr *ngIf = "passengers && passengers.length == 0">
+          <td colspan="3">no records found</td>
+        </tr>
+      </table>
+
+      <label class="control-label col-sm-2">Add Flight</label>
+      <form class="form-horizontal">
+
+        <label class="control-label col-sm-2">Airplane ID</label>
+        <div class="input-group form-group col-sm-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input id="id" type="number" [(ngModel)]="flight.aId" name="id" class="form-control"
+                placeholder="airplane ID">
+        </div>
+
+        <label class="control-label col-sm-2">Departure Date</label>
+        <div class="input-group form-group col-sm-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input id="dd" type="date" [(ngModel)]="flight.dDate" name="dd" class="form-control"
+                placeholder="d date">
+        </div>
+
+        <label class="control-label col-sm-2">Departure Time</label>
+        <div class="input-group form-group col-sm-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input id="dt" type="time" [(ngModel)]="flight.dTime" name="dt" class="form-control"
+                placeholder="dt">
+        </div>
+
+        <label class="control-label col-sm-2">Arrival Date</label>
+        <div class="input-group form-group col-sm-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input id="ad" type="date" [(ngModel)]="flight.aDate" name="ad" class="form-control"
+                placeholder="ad">
+        </div>
+
+        <label class="control-label col-sm-2">Arrival Time</label>
+        <div class="input-group form-group col-sm-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input id="at" type="time" [(ngModel)]="flight.aTime" name="at" class="form-control"
+                placeholder="at">
+        </div>
+
+        <label class="control-label col-sm-2">Departure Airport</label>
+        <div class="input-group form-group col-sm-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input id="da" type="text" [(ngModel)]="flight.dAirport" name="da" class="form-control"
+                placeholder="Departure Airport">
+        </div>
+
+        <label class="control-label col-sm-2">Arrival Airport</label>
+        <div class="input-group form-group col-sm-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input id="aa" type="text" [(ngModel)]="flight.aAirport" name="aa" class="form-control"
+                placeholder="Arrival Airport">
+        </div>
+
+        <label class="control-label col-sm-2">Base Price</label>
+        <div class="input-group form-group col-sm-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input id="bp" type="number" [(ngModel)]="flight.bPrice" name="bp" class="form-control"
+                placeholder="Base Price">
+        </div>
+
+        <label class="control-label col-sm-2">Status</label>
+        <div class="input-group form-group col-sm-8">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+            </div>
+            <input id="s" type="text" [(ngModel)]="flight.status" name="s" class="form-control"
+                placeholder="Status - on-time or delayed">
+        </div>
+
+        <div class="form-group col-sm-offset-2 col-sm-8">
+            <button (click)="createFlight()" class="btn login_btn btn-primary">Create</button>
+            <!-- <input id="formButton" type="button" value="Login" class="btn float-right login_btn" onclick="loginSubmit()"> -->
+        </div>
+    </form>
+
+</body>

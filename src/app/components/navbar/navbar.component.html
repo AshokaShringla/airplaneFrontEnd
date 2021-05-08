@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" >
     <a class="navbar-brand" routerLink="/flights" style="margin-right:25px">Airplane Database System</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse"
        data-target="#navbarSupportedContent"
@@ -7,41 +7,36 @@
        <span class="navbar-toggler-icon"></span>
     </button>
  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
        <ul class="navbar-nav mr-auto">
- 
- 
- 
  <!--ngIf's made for hiding navbar functionality if not logged in/not QC-->
  
         <li *ngIf = "ifCustomer()" class="nav-item" style="margin-right:25px">
             <a class="nav-link" routerLink="/customerhome">Home</a>
         </li>
+
+        <li *ngIf = "ifAgent()" class="nav-item" style="margin-right:25px">
+         <a class="nav-link" routerLink="/agenthome">Home</a>
+     </li>
+
+     <li *ngIf = "ifStaff()" class="nav-item" style="margin-right:25px">
+      <a class="nav-link" routerLink="/staffhome">Home</a>
+  </li>
  
           <li *ngIf = "!ifLoggedIn()" class="nav-item" style="margin-right:25px">
              <a class="nav-link" routerLink="/login">Login</a>
           </li>
  
           <li *ngIf = "!ifLoggedIn()" class="nav-item" style="margin-right:25px">
-             <a class="nav-link" routerLink="/forgot-password">Forgot Password?</a>
-          </li>
- 
-          <li *ngIf = "!ifLoggedIn()" class="nav-item" style="margin-right:25px">
              <a class="nav-link" routerLink="/register">Register</a>
           </li>
  
-
-
-
- 
        </ul>
        <li *ngIf = "ifLoggedIn()"><a href="finder">
-        <button (click)="logout()" *ngIf = "ifLoggedIn()" routerLink="login" class="btn btn-danger ml-4">Log Out</button>
+        <button (click)="logout()" *ngIf = "ifLoggedIn()" routerLink="/login" class="btn btn-danger ml-4">Log Out</button>
      </a>
      </li>
        <li *ngIf = "ifLoggedIn()"><a href="finder">
         <p class="navbar-text">Logged in as {{userType}} </p> 
      </a>
      </li>
-    </div>
  </nav>
